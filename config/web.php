@@ -11,16 +11,13 @@ $config = [
         ],
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log','assetsAutoCompress'],
+    'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
-        'assetsAutoCompress' =>
-        [
-            'class'         => '\skeeks\yii2\assetsAuto\AssetsAutoCompressComponent',
-        ],
+    
         'assetManager' => [
     'bundles' => [
         // you can override AssetBundle configs here       

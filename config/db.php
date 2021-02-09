@@ -16,8 +16,8 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=u3286503_db_cvonline',
-    'username' => '"u3286503_yusufcv ',
-    'password' => '"lenovo12345";',
+    'username' => 'u3286503_yusufcv',
+    'password' => 'lenovo12345',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
