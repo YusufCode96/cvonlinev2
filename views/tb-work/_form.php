@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 <div class="tb-work-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true]) ?>
 

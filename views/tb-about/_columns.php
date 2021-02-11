@@ -14,9 +14,17 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'foto',
+    // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'foto',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Foto Profil',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Url::to(['tb-about/view-foto','nama'=>$data->foto])."'>";
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

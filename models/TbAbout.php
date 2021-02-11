@@ -35,11 +35,12 @@ class TbAbout extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['foto', 'isi', 'nama', 'bagian', 'ttl', 'alamat', 'negara', 'no_hp', 'email'], 'required'],
+            [['isi', 'nama', 'bagian', 'ttl', 'alamat', 'negara', 'no_hp', 'email'], 'required'],
             [['isi', 'alamat'], 'string'],
-            [['foto', 'nama', 'no_hp', 'email'], 'string', 'max' => 30],
+            [['nama', 'no_hp', 'email'], 'string', 'max' => 30],
             [['bagian', 'ttl', 'negara'], 'string', 'max' => 20],
             [['tahun_exper'], 'string', 'max' => 255],
+            [['foto'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png']
         ];
     }
 

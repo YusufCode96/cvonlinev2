@@ -9,9 +9,9 @@ use yii\widgets\ActiveForm;
 
 <div class="tb-about-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'foto')->textInput(['maxlength' => true]) ?>
+    <!-- <?= $form->field($model, 'foto')->textInput(['maxlength' => true]) ?> -->
 
     <?= $form->field($model, 'isi')->textarea(['rows' => 6]) ?>
 
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'tahun_exper')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'foto')->fileInput() ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

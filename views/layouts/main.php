@@ -47,6 +47,7 @@ use yii\helpers\Url;
             left: 50%;
         }
     </style>
+    
     <link rel="stylesheet" href="<?php echo Yii::getAlias('@web') ?>/themeadmin/assets/css/app.css">
     <link rel="stylesheet" href=" https://use.fontawesome.com/releases/v5.3.1/css/all.css">
    

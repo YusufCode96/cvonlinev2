@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 <div class="tb-experience-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'foto_exper')->textInput(['maxlength' => true]) ?>
 

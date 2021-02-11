@@ -123,12 +123,26 @@ class TbAboutController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
+         if($model->load($request->post())){
+                $gambar = UploadedFile::getInstance($model, 'gambar');
+
+                if ($model->validate()) {
+                  
+                    if (!empty($gambar)) {
+                        $gambar->saveAs(Yii::getAlias('@web/web/images/profil/') . 'gambar.' . $gambar->extension);
+                        $model->gambar = 'gambar.' . $gambar->extension;
+                        $model->save();
+                        
+                    }else{
+                        $model->save(); 
+                    }
+                   
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
             }
         }
        
@@ -267,5 +281,12 @@ class TbAboutController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+ 
+	
+public function actionViewGambar($nama){
+        $file = Yii::getAlias('@frontend/web/images/profil/' . $nama);
+        return Yii::$app->response->sendFile($file, NULL, ['inline' => TRUE]);
     }
 }
