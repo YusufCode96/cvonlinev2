@@ -23,7 +23,7 @@ return [
         'header' => 'Foto Profil',
         'format' => 'raw',
         'value' => function($data){
-            return "<img width='104px' src='".Url::to(['tb-about/view-foto','nama'=>$data->foto])."'>";
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/profil/' . $data->foto)."'>";
         }
     ],
     [

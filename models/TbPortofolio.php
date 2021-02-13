@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tb_portofolio".
@@ -29,10 +31,11 @@ class TbPortofolio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['gambar_porto', 'judul_porto'], 'required'],
+            [['judul_porto'], 'required'],
             [['about_id'], 'integer'],
-            [['gambar_porto', 'judul_porto'], 'string', 'max' => 30],
+            [['judul_porto'], 'string', 'max' => 30],
             [['desk_porto'], 'string', 'max' => 255],
+            [['gambar_porto'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png']
         ];
     }
 

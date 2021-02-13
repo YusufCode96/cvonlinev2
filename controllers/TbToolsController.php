@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * TbToolsController implements the CRUD actions for TbTools model.
@@ -99,7 +100,20 @@ class TbToolsController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->img = UploadedFile::getInstance($model, 'img');
+                  
+                if ($model->img) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->img->baseName."_".$rnd.".".$model->img->extension;
+                    $model->img->saveAs('themeweb/images/tools/' . $newname);
+                    $model->img=$newname;
+                    
+                }
+                if($model->validate()){
+                    $model->save(); 
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TbTools",
@@ -144,7 +158,8 @@ class TbToolsController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);
+        $image_old=$model->img;        
 
         if($request->isAjax){
             /*
@@ -160,7 +175,25 @@ class TbToolsController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->img = UploadedFile::getInstance($model, 'img');
+
+
+                if ($model->img) {     
+                    if (file_exists('themeweb/images/tools/' . $image_old)) {
+                        unlink('themeweb/images/tools/'.$image_old);
+                    }    
+                    $rnd = rand(0,9999);
+                    $newname= $model->img->baseName."_".$rnd.".".$model->img->extension;
+                    $model->img->saveAs('themeweb/images/tools/' . $newname);
+                    $model->img=$newname;
+                    
+                }else{
+                    $model->img=$image_old;
+                }
+                if($model->validate()){
+                    $model->save(); 
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "TbTools #".$id,
@@ -204,6 +237,10 @@ class TbToolsController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
+        $model=$this->findModel($id);  
+        if (file_exists('themeweb/images/tools/' . $model->img) ) {
+            unlink('themeweb/images/tools/'.$model->img);
+        }
         $this->findModel($id)->delete();
 
         if($request->isAjax){
@@ -235,6 +272,9 @@ class TbToolsController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
+            if (file_exists('themeweb/images/tools/' . $model->img)) {
+                unlink('themeweb/images/tools/'.$model->img);
+            }
             $model->delete();
         }
 

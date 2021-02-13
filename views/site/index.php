@@ -315,7 +315,7 @@ use yii\helpers\Url;
                                   {
                         ?>
                         <div class="col-sm-6 col-md-4 col-xl-4 col-partner">
-                          <div class="partner-inner"><img alt="" src="<?php  echo Yii::getAlias('@web') ?>/themeweb/images/tempat kerja/<?php echo $tools2['img']  ?>"></div>
+                          <div class="partner-inner"><img alt="" src="<?php  echo Yii::getAlias('@web') ?>/themeweb/images/tools/<?php echo $tools2['img']  ?>"></div>
                         </div>
                         <?php }  ?>
                       </div>

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tb_work".
@@ -33,6 +35,7 @@ class TbWork extends \yii\db\ActiveRecord
             [['desk_perusahaan'], 'string'],
             [['about_id'], 'integer'],
             [['nama_perusahaan', 'image'], 'string', 'max' => 255],
+            [['image'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png']
         ];
     }
 

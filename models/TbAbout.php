@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 
+use yii\base\Model;
+use yii\web\UploadedFile;
+
 /**
  * This is the model class for table "tb_about".
  *

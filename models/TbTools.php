@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tb_tools".
@@ -31,6 +33,7 @@ class TbTools extends \yii\db\ActiveRecord
             [['nama_tool'], 'required'],
             [['about_id'], 'integer'],
             [['nama_tool', 'img'], 'string', 'max' => 255],
+            [['img'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png']
         ];
     }
 

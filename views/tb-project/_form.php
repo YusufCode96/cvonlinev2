@@ -17,12 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'desk2_project')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'image1')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'image2')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'image3')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'client_project')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'team_project')->textInput(['maxlength' => true]) ?>
@@ -32,7 +26,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'date_project')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'about_id')->textInput() ?>
+    
+    <?= $form->field($model, 'image1')->fileInput() ?>
 
+    <?= $form->field($model, 'image2')->fileInput() ?> 
+
+    <?= $form->field($model, 'image3')->fileInput() ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

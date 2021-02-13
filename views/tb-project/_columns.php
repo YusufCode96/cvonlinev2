@@ -27,17 +27,29 @@ return [
         'attribute'=>'desk2_project',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'image1',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Gambar pertama',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/project/' . $data->image1)."'>";
+        }
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'image2',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Gambar kedua',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/project/' . $data->image2)."'>";
+        }
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'image3',
-    // ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Gambar ketiga',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/project/' . $data->image3)."'>";
+        }
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'client_project',

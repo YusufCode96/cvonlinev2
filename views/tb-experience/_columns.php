@@ -14,9 +14,14 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
+  
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'foto_exper',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Foto Profil',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/experience/' . $data->foto_exper)."'>";
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

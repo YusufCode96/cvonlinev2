@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tb_experience".
@@ -31,10 +33,11 @@ class TbExperience extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['foto_exper', 'tahun', 'judul_exper'], 'required'],
+            [[ 'tahun', 'judul_exper'], 'required'],
             [['tahun', 'about_id'], 'integer'],
-            [['foto_exper', 'judul_exper'], 'string', 'max' => 30],
+            [['judul_exper'], 'string', 'max' => 30],
             [['deskripsi_exper', 'alamat_exper'], 'string', 'max' => 255],
+            [['foto_exper'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png']
         ];
     }
 

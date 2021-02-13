@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * TbProjectController implements the CRUD actions for TbProject model.
@@ -99,7 +100,39 @@ class TbProjectController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                
+                $model->image1 = UploadedFile::getInstance($model, 'image1');
+                $model->image2 = UploadedFile::getInstance($model, 'image2');
+                $model->image3 = UploadedFile::getInstance($model, 'image3');
+                
+                if ($model->image1) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->image1->baseName."_".$rnd.".".$model->image1->extension;
+                    $model->image1->saveAs('themeweb/images/project/' . $newname);
+                    $model->image1=$newname;
+                    
+                }
+                if ($model->image2) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->image2->baseName."_".$rnd.".".$model->image2->extension;
+                    $model->image2->saveAs('themeweb/images/project/' . $newname);
+                    $model->image2=$newname;
+                    
+                }
+
+                if ($model->image3) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->image3->baseName."_".$rnd.".".$model->image3->extension;
+                    $model->image3->saveAs('themeweb/images/project/' . $newname);
+                    $model->image3=$newname;
+                    
+                }
+
+                if($model->validate()){
+                    $model->save(); 
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TbProject",
@@ -144,7 +177,10 @@ class TbProjectController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id); 
+        $image_old1=$model->image1; 
+        $image_old2=$model->image2; 
+        $image_old3=$model->image3;       
 
         if($request->isAjax){
             /*
@@ -160,7 +196,54 @@ class TbProjectController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->image1 = UploadedFile::getInstance($model, 'image1');
+                $model->image2 = UploadedFile::getInstance($model, 'image2');
+                $model->image3 = UploadedFile::getInstance($model, 'image3');
+
+                if ($model->image1) {     
+                    if (file_exists('themeweb/images/project/' . $image_old1)) {
+                        unlink('themeweb/images/project/'.$image_old1);
+                    }    
+                    $rnd = rand(0,9999);
+                    $newname= $model->image1->baseName."_".$rnd.".".$model->image1->extension;
+                    $model->image1->saveAs('themeweb/images/project/' . $newname);
+                    $model->image1=$newname;
+                    
+                }else{
+                    $model->image1=$image_old1;
+                }
+
+                if ($model->image2) { 
+                    if (file_exists('themeweb/images/project/' . $image_old2)) {
+                        unlink('themeweb/images/project/'.$image_old2);
+                    }        
+                    $rnd = rand(0,9999);
+                    $newname= $model->image2->baseName."_".$rnd.".".$model->image2->extension;
+                    $model->image2->saveAs('themeweb/images/project/' . $newname);
+                    $model->image2=$newname;
+                    
+                }else{
+                    $model->image2=$image_old2;
+                }
+
+                if ($model->image3) {
+                    if (file_exists('themeweb/images/project/' . $image_old3)) {
+                        unlink('themeweb/images/project/'.$image_old3);
+                    }        
+                    $rnd = rand(0,9999);
+                    $newname= $model->image3->baseName."_".$rnd.".".$model->image3->extension;
+                    $model->image3->saveAs('themeweb/images/project/' . $newname);
+                    $model->image3=$newname;
+                    
+                }else{
+                    $model->image3=$image_old3;
+                }
+
+                if($model->validate()){
+                    $model->save(); 
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "TbProject #".$id,
@@ -204,6 +287,16 @@ class TbProjectController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
+        $model=$this->findModel($id);  
+        if (file_exists('themeweb/images/project/' . $model->image1)) {
+            unlink('themeweb/images/project/'.$model->image1);
+        }
+        if (file_exists('themeweb/images/project/' . $model->image2)) {
+            unlink('themeweb/images/project/'.$model->image2);
+        }
+        if (file_exists('themeweb/images/project/' . $model->image3)) {
+            unlink('themeweb/images/project/'.$model->image3);
+        }
         $this->findModel($id)->delete();
 
         if($request->isAjax){
@@ -235,6 +328,15 @@ class TbProjectController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
+            if (file_exists('themeweb/images/project/' . $model->image1)) {
+                unlink('themeweb/images/project/'.$model->image1);
+            }
+            if (file_exists('themeweb/images/project/' . $model->image2)) {
+                unlink('themeweb/images/project/'.$model->image2);
+            }
+            if (file_exists('themeweb/images/project/' . $model->image3)) {
+                unlink('themeweb/images/project/'.$model->image3);
+            }
             $model->delete();
         }
 

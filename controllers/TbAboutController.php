@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * TbAboutController implements the CRUD actions for TbAbout model.
@@ -99,7 +100,19 @@ class TbAboutController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->foto = UploadedFile::getInstance($model, 'foto');
+
+                if ($model->foto && $model->validate()) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->foto->baseName."_".$rnd.".".$model->foto->extension;
+                    $model->foto->saveAs('themeweb/images/profil/' . $newname);
+                    $model->foto=$newname;
+                    $model->save();
+                }else{
+                    $model->save();  
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TbAbout",
@@ -124,26 +137,26 @@ class TbAboutController extends Controller
             *   Process for non-ajax request
             */
          if($model->load($request->post())){
-                $gambar = UploadedFile::getInstance($model, 'gambar');
-
-                if ($model->validate()) {
+                // $gambar = UploadedFile::getInstance($model, 'foto');
+              
+                // if ($model->validate()) {
                   
-                    if (!empty($gambar)) {
-                        $gambar->saveAs(Yii::getAlias('@web/web/images/profil/') . 'gambar.' . $gambar->extension);
-                        $model->gambar = 'gambar.' . $gambar->extension;
-                        $model->save();
+                //     if (!empty($gambar)) {
+                //         $gambar->saveAs(   Yii::getAlias('@web') .'themeweb/images/profil/'. $gambar>baseName.'.'. $gambar->extension);
+                //         $model->gambar = $gambar->baseName.'.' . $gambar->extension;
+                //         $model->save();
                         
-                    }else{
-                        $model->save(); 
-                    }
+                //     }else{
+                //         $model->save(); 
+                //     }
                    
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('create', [
-                        'model' => $model,
-                    ]);
+                //     return $this->redirect(['view', 'id' => $model->id]);
+                // } else {
+                //     return $this->render('create', [
+                //         'model' => $model,
+                //     ]);
                 }
-            }
+          //  }
         }
        
     }
@@ -158,7 +171,8 @@ class TbAboutController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id); 
+        $image_old=$model->foto;      
 
         if($request->isAjax){
             /*
@@ -174,7 +188,23 @@ class TbAboutController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                     $model->foto = UploadedFile::getInstance($model, 'foto');
+
+                if ($model->foto && $model->validate()) { 
+                    
+                    if (file_exists('themeweb/images/profil/' . $image_old)) {
+                        unlink('themeweb/images/profil/'.$image_old);
+                    }    
+                    $rnd = rand(0,9999);
+                    $newname= $model->foto->baseName."_".$rnd.".".$model->foto->extension;
+                    $model->foto->saveAs('themeweb/images/profil/' . $newname);
+                    $model->foto=$newname;
+                    $model->save();
+                }else{
+                    $model->foto=$image_old;
+                    $model->save();  
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "TbAbout #".$id,
@@ -218,6 +248,11 @@ class TbAboutController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
+        $model=$this->findModel($id);  
+        if (file_exists('themeweb/images/profil/' . $model->foto)) {
+            unlink('themeweb/images/profil/'.$model->foto);
+        }
+
         $this->findModel($id)->delete();
 
         if($request->isAjax){
@@ -249,6 +284,9 @@ class TbAboutController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
+            if (file_exists('themeweb/images/profil/' . $model->foto)) {
+                unlink('themeweb/images/profil/'.$model->foto);
+            }
             $model->delete();
         }
 
@@ -284,9 +322,5 @@ class TbAboutController extends Controller
     }
 
  
-	
-public function actionViewGambar($nama){
-        $file = Yii::getAlias('@frontend/web/images/profil/' . $nama);
-        return Yii::$app->response->sendFile($file, NULL, ['inline' => TRUE]);
-    }
+
 }

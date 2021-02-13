@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
+
 
 /**
  * TbExperienceController implements the CRUD actions for TbExperience model.
@@ -99,15 +101,27 @@ class TbExperienceController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
+            } else if($model->load($request->post())){
+                $model->foto_exper = UploadedFile::getInstance($model, 'foto_exper');
+
+                if ($model->foto_exper && $model->validate()) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->foto_exper->baseName."_".$rnd.".".$model->foto_exper->extension;
+                    $model->foto_exper->saveAs('themeweb/images/experience/' . $newname);
+                    $model->foto_exper=$newname;
+                    $model->save();
+                }else{
+                    $model->save();  
+                }
+
+               return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TbExperience",
                     'content'=>'<span class="text-success">Create TbExperience success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
-                ];         
+                ];            
             }else{           
                 return [
                     'title'=> "Create new TbExperience",
@@ -145,7 +159,7 @@ class TbExperienceController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
-
+        $image_old=$model->foto_exper;  
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -160,8 +174,23 @@ class TbExperienceController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
+            }else if($model->load($request->post())){
+                $model->foto_exper = UploadedFile::getInstance($model, 'foto_exper');
+                if ($model->foto_exper && $model->validate()) { 
+                    
+                    if (file_exists('themeweb/images/experience/' . $image_old)) {
+                        unlink('themeweb/images/experience/'.$image_old);
+                    }    
+                    $rnd = rand(0,9999);
+                    $newname= $model->foto_exper->baseName."_".$rnd.".".$model->foto_exper->extension;
+                    $model->foto_exper->saveAs('themeweb/images/experience/' . $newname);
+                    $model->foto_exper=$newname;
+                    $model->save();
+                }else{
+                    $model->foto_exper=$image_old;
+                    $model->save();  
+                }
+                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "TbExperience #".$id,
                     'content'=>$this->renderAjax('view', [
@@ -169,7 +198,7 @@ class TbExperienceController extends Controller
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
+                ]; 
             }else{
                  return [
                     'title'=> "Update TbExperience #".$id,
@@ -204,6 +233,11 @@ class TbExperienceController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
+        $model=$this->findModel($id);  
+        if (file_exists('themeweb/images/experience/' . $model->foto_exper)) {
+            unlink('themeweb/images/experience/'.$model->foto_exper);
+        }
+
         $this->findModel($id)->delete();
 
         if($request->isAjax){
@@ -235,6 +269,9 @@ class TbExperienceController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
+            if (file_exists('themeweb/images/experience/' . $model->foto_exper)) {
+                unlink('themeweb/images/experience/'.$model->foto_exper);
+            }
             $model->delete();
         }
 

@@ -14,10 +14,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'gambar_porto',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'gambar_porto',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'judul_porto',
@@ -29,6 +29,14 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'desk_porto',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Gambar Portofolio',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/portofolio/' . $data->gambar_porto)."'>";
+        }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

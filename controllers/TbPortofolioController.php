@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * TbPortofolioController implements the CRUD actions for TbPortofolio model.
@@ -69,6 +70,7 @@ class TbPortofolioController extends Controller
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
+
             ]);
         }
     }
@@ -99,7 +101,18 @@ class TbPortofolioController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            } else if($model->load($request->post())){
+                $model->gambar_porto = UploadedFile::getInstance($model, 'gambar_porto');
+
+                if ($model->gambar_porto && $model->validate()) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->gambar_porto->baseName."_".$rnd.".".$model->gambar_porto->extension;
+                    $model->gambar_porto->saveAs('themeweb/images/portofolio/' . $newname);
+                    $model->gambar_porto=$newname;
+                    $model->save();
+                }else{
+                    $model->save();  
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TbPortofolio",
@@ -144,7 +157,8 @@ class TbPortofolioController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id); 
+        $image_old=$model->gambar_porto;       
 
         if($request->isAjax){
             /*
@@ -160,7 +174,22 @@ class TbPortofolioController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->gambar_porto = UploadedFile::getInstance($model, 'gambar_porto');
+                if ($model->gambar_porto && $model->validate()) { 
+                    
+                    if (file_exists('themeweb/images/portofolio/' . $image_old)) {
+                        unlink('themeweb/images/portofolio/'.$image_old);
+                    }    
+                    $rnd = rand(0,9999);
+                    $newname= $model->gambar_porto->baseName."_".$rnd.".".$model->gambar_porto->extension;
+                    $model->gambar_porto->saveAs('themeweb/images/portofolio/' . $newname);
+                    $model->gambar_porto=$newname;
+                    $model->save();
+                }else{
+                    $model->gambar_porto=$image_old;
+                    $model->save();  
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "TbPortofolio #".$id,
@@ -204,6 +233,10 @@ class TbPortofolioController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
+        $model=$this->findModel($id);  
+        if (file_exists('themeweb/images/portofolio/' . $model->gambar_porto)) {
+            unlink('themeweb/images/portofolio/'.$model->gambar_porto);
+        }
         $this->findModel($id)->delete();
 
         if($request->isAjax){
@@ -235,6 +268,9 @@ class TbPortofolioController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
+            if (file_exists('themeweb/images/portofolio/' . $model->gambar_porto)) {
+                unlink('themeweb/images/portofolio/'.$model->gambar_porto);
+            }
             $model->delete();
         }
 

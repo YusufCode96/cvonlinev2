@@ -13,9 +13,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama_tool')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'about_id')->textInput() ?>
+	<?= $form->field($model, 'img')->fileInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

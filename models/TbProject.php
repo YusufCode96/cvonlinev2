@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tb_project".
@@ -40,6 +42,7 @@ class TbProject extends \yii\db\ActiveRecord
             [['desk_project', 'desk2_project'], 'string'],
             [['about_id'], 'integer'],
             [['nama_project', 'image1', 'image2', 'image3', 'client_project', 'team_project', 'services_project', 'date_project'], 'string', 'max' => 255],
+            [['image1','image2','image3'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png']
         ];
     }
 

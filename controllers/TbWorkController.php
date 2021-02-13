@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
+
 
 /**
  * TbWorkController implements the CRUD actions for TbWork model.
@@ -99,7 +101,20 @@ class TbWorkController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->image = UploadedFile::getInstance($model, 'image');
+                
+                if ($model->image) {     
+                    $rnd = rand(0,9999);
+                    $newname= $model->image->baseName."_".$rnd.".".$model->image->extension;
+                    $model->image->saveAs('themeweb/images/perusahaan/' . $newname);
+                    $model->image=$newname;
+                    
+                }
+                if($model->validate()){
+                    $model->save(); 
+                }
+                
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TbWork",
@@ -145,7 +160,7 @@ class TbWorkController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
-
+        $image_old=$model->image;
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -160,7 +175,25 @@ class TbWorkController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->image = UploadedFile::getInstance($model, 'image');
+                
+                if ($model->image) {     
+                    if (file_exists('themeweb/images/perusahaan/' . $image_old)) {
+                        unlink('themeweb/images/perusahaan/'.$image_old);
+                    }    
+                    $rnd = rand(0,9999);
+                    $newname= $model->image->baseName."_".$rnd.".".$model->image->extension;
+                    $model->image->saveAs('themeweb/images/perusahaan/' . $newname);
+                    $model->image=$newname;
+                    
+                }else{
+                    $model->image=$image_old;
+                }
+                if($model->validate()){
+                    $model->save(); 
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "TbWork #".$id,
@@ -204,6 +237,10 @@ class TbWorkController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
+        $model=$this->findModel($id);  
+        if (file_exists('themeweb/images/perusahaan/' . $model->image) ) {
+            unlink('themeweb/images/perusahaan/'.$model->image);
+        }
         $this->findModel($id)->delete();
 
         if($request->isAjax){
@@ -235,6 +272,9 @@ class TbWorkController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
+            if (file_exists('themeweb/images/perusahaan/' . $model->image) ) {
+                unlink('themeweb/images/perusahaan/'.$model->image);
+            }
             $model->delete();
         }
 

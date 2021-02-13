@@ -9,16 +9,16 @@ use yii\widgets\ActiveForm;
 
 <div class="tb-portofolio-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'gambar_porto')->textInput(['maxlength' => true]) ?>
+  
 
     <?= $form->field($model, 'judul_porto')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'about_id')->textInput() ?>
 
     <?= $form->field($model, 'desk_porto')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'gambar_porto')->fileInput() ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

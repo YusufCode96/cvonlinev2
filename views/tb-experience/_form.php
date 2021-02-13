@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'foto_exper')->textInput(['maxlength' => true]) ?>
+   
 
     <?= $form->field($model, 'tahun')->textInput() ?>
 
@@ -22,6 +22,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'about_id')->textInput() ?>
 
     <?= $form->field($model, 'alamat_exper')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'foto_exper')->fileInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

@@ -18,13 +18,18 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nama_tool',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'img',
-    ],
+   
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'about_id',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Gambar Tools',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/tools/' . $data->img)."'>";
+        }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

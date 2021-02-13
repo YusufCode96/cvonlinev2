@@ -23,8 +23,12 @@ return [
         'attribute'=>'desk_perusahaan',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'image',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Logo Perusahaan',
+        'format' => 'raw',
+        'value' => function($data){
+            return "<img width='104px' src='".Yii::getAlias('@web/themeweb/images/perusahaan/' . $data->image)."'>";
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
