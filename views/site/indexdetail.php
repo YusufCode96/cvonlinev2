@@ -118,7 +118,7 @@ use yii\helpers\Url;
       </div>
       <img alt="" class="image-holder wow fadeIn" src="<?php  echo Yii::getAlias('@web') ?>/themeweb/images/project/<?php echo $project['image1']  ?>">
       <div class="container">
-        <p class="project-detail-text text-center"><?php echo $project['desk_project']  ?>. <a href="https://example.domain/denima6vsco" target="_blank" class="underline">https://example.domain/denima6vsco</a>
+        <p class="project-detail-text text-center"><?php echo $project['desk_project']  ?>
         </p>
         <img alt="" class="image-holder wow fadeInLeft" src="<?php  echo Yii::getAlias('@web') ?>/themeweb/images/project/<?php echo $project['image2']  ?>">
         <img alt="" class="image-holder wow fadeInRight" src="<?php  echo Yii::getAlias('@web') ?>/themeweb/images/project/<?php echo $project['image3']  ?>">

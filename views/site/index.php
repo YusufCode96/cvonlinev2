@@ -120,9 +120,9 @@ use yii\helpers\Url;
                       <div class="row">
                         <div class="col-md-8 col-lg-6">
                           <h3 class="text-white  wow fadeIn" data-wow-delay="0.1s"><span class="text-primary">Halo</span> Saya <?php echo $about['nama']; ?></h3>
-                          <h1 class="display-2 text-white  wow fadeIn" data-wow-delay="0.1s"><span class="">Frontend Developer & <span class="text-primary">UIUX</span></h1>
+                          <h1 class="display-2 text-white  wow fadeIn" data-wow-delay="0.1s"><span class="">Web Developer & <span class="text-primary">UI Designer</span></h1>
                           
-                            <div class="col-sm-12"  style="padding-top:15px;padding-left:5px"><button type="submit" class="btn"><span style="font-size:16px" class="icon ion-ios-download-outline"></span> Download CV</button></div>
+                            <!-- <div class="col-sm-12"  style="padding-top:15px;padding-left:5px"><button type="submit" class="btn"><span style="font-size:16px" class="icon ion-ios-download-outline"></span> Download CV</button></div> -->
                          
                           <!-- <a class="popup-youtube"  href="http://www.youtube.com/watch?v=0O2aH4XLbto"><span class="icon ion-ios-play"></span>Watch video </a> -->
                         </div>
