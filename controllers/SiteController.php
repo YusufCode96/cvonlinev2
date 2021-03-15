@@ -99,8 +99,9 @@ class SiteController extends Controller
           }else{
             $whereValueslogin=1;
           }
-        $about = TbAbout::findOne($whereValueslogin);
-        $project = TbProject::find()->where("about_id=".$whereValueslogin)->one();
+        $project = TbProject::find()->where("id=".$whereValueslogin)->one();
+        $about = TbAbout::findOne($project->about_id);
+        
         return $this->render('indexdetail', [
             'about' => $about,
             'project' => $project,
