@@ -8,10 +8,10 @@
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+ use app\assets\AppAsset;
 
 
-AppAsset::register($this);
+ AppAsset::register($this);
 
 ?>
 <?php 

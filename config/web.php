@@ -17,7 +17,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
-    
+     
         'assetManager' => [
     'bundles' => [
         // you can override AssetBundle configs here       

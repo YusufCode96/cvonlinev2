@@ -46,7 +46,7 @@ class WebAsset extends AssetBundle
         'themeweb/js/scripts.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
+      //  'yii\web\YiiAsset',
         // 'yii\bootstrap4\BootstrapAsset',
     ];
 }
