@@ -19,7 +19,7 @@ $config = [
     'components' => [
         'assetsAutoCompress' => [
             'class'   => '\skeeks\yii2\assetsAuto\AssetsAutoCompressComponent',
-            'enabled' => true,
+            'enabled' => false,
 
             'readFileTimeout' => 3,           //Time in seconds for reading each asset file
 
