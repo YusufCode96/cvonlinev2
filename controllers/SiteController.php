@@ -117,19 +117,23 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $this->layout = '@app/views/layouts/login';
-        if (!Yii::$app->user->isGuest) {
-            
-            return $this->redirect(['dashboard']);
-        }
-
         $model = new TbLogin();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            //return $this->goBack();
-            return $this->redirect(['login']);
-            // var_dump($model->login());
-            // var_dump("load");die();
+            return $this->redirect(['dashboard']);
         }
+        // if (!Yii::$app->user->isGuest) {
+            
+           
+        // }
 
+        // $model = new TbLogin();
+       
+        //     //return $this->goBack();
+           
+        //     // var_dump($model->login());
+        //     // var_dump("load");die();
+        // }
+        $model->username = '';
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
@@ -143,7 +147,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        //Yii::$app->user->logout();
 
         return $this->redirect(['login']);
     }

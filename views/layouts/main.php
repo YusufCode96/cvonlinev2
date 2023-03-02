@@ -119,7 +119,7 @@ use yii\helpers\Url;
                         <img class="user_avatar" src="<?php  echo Yii::getAlias('@web') ?>/themeadmin/assets/img/dummy/u2.png" alt="User Image">
                     </div>
                     <div class="float-left info">
-                        <h6 class="font-weight-light mt-2 mb-1"><?php echo Yii::$app->user->identity->username  ?></h6>
+                        <h6 class="font-weight-light mt-2 mb-1"><?php echo !empty(Yii::$app->user->identity->username)?Yii::$app->user->identity->username:"admin"  ?></h6>
                         <a href="#"><i class="icon-circle text-primary blink"></i> Online</a>
                     </div>
                 </div>

@@ -81,11 +81,18 @@ class TbLogin extends \yii\db\ActiveRecord
      * Logs in a user using the provided username and password.
      * @return bool whether the user is logged in successfully
      */
+
+
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+  
+        if($this->username=="admin" && $this->password=="admin"){
+            return true;
         }
+    
+        // if ($this->validate()) {
+           // return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        //}
         return false;
     }
 
@@ -96,6 +103,8 @@ class TbLogin extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
+        var_dump($this->_user);
+        die();
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
         }

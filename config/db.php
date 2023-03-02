@@ -15,10 +15,17 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=u3286503_db_cvonline',
-    'username' => 'u3286503_yusufcv',
-    'password' => 'lenovo12345',
+    'dsn' => 'mysql:host=localhost;port=3307;dbname=db_cv',
+    'username' => 'root',
+    'password' => '',
     'charset' => 'utf8',
+
+
+    // 'class' => 'yii\db\Connection',
+    // 'dsn' => 'mysql:host=localhost;port=3307;dbname=db_cv',
+    // 'username' => 'root',
+    // 'password' => '',
+    // 'charset' => 'utf8',
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,

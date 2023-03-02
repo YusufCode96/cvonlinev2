@@ -119,8 +119,8 @@ use yii\helpers\Url;
                     <div class="intro">
                       <div class="row">
                         <div class="col-md-8 col-lg-6">
-                          <h3 style="font-size:2.8vw" class="text-white  wow fadeIn" data-wow-delay="0.1s"><span class="text-primary">Halo</span> Saya <?php echo $about['nama']; ?></h3>
-                          <h1 style="font-size:5.8vw" class=" text-white  wow fadeIn" data-wow-delay="0.1s"><span class="">Web Developer & <span class="text-primary">UI Desainer</span></h1>
+                          <h3 class="text-white  wow fadeIn" data-wow-delay="0.1s"><span class="text-primary">Halo</span> Saya <?php echo $about['nama']; ?></h3>
+                          <h1 class=" text-white  wow fadeIn" data-wow-delay="0.1s"><span class="">Web Developer & <span class="text-primary">UI Desainer</span></h1>
                           
                             <!-- <div class="col-sm-12"  style="padding-top:15px;padding-left:5px"><button type="submit" class="btn"><span style="font-size:16px" class="icon ion-ios-download-outline"></span> Download CV</button></div> -->
                          
